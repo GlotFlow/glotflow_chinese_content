@@ -75,11 +75,11 @@ export async function loadBooks(baseDir: string): Promise<(BookMeta & {
 
   for (const bookSlug of bookDirs) {
     const bookDir = join(booksDir, bookSlug);
-    const metaPath = join(bookDir, 'index.yaml');
+    const metaPath = join(bookDir, 'index.md');
 
     if (!(await fileExists(metaPath))) continue;
 
-    const metaRaw = await readYamlFile(metaPath);
+    const { data: metaRaw } = await readMarkdownFile(metaPath);
     const meta = BookMetaSchema.parse({ ...metaRaw, type: 'book' });
 
     // Load chapters
@@ -186,12 +186,12 @@ export async function loadArticles(baseDir: string): Promise<(ArticleMeta & {
 
   for (const articleSlug of articleDirs) {
     const articleDir = join(articlesDir, articleSlug);
-    const metaPath = join(articleDir, 'index.yaml');
+    const metaPath = join(articleDir, 'index.md');
     const contentPath = join(articleDir, 'content.md');
 
     if (!(await fileExists(metaPath))) continue;
 
-    const metaRaw = await readYamlFile(metaPath);
+    const { data: metaRaw } = await readMarkdownFile(metaPath);
     const meta = ArticleMetaSchema.parse({ ...metaRaw, type: 'article' });
 
     // Calculate word count from content

@@ -1,21 +1,19 @@
+---
 id: how-to-learn-chinese
-
 title:
   zh: 怎么学中文？
   en: How to Learn Chinese?
   vi: Làm sao để học tiếng Trung?
-
 subtitle:
   zh: 给初学者的建议
   en: Tips for beginners
   vi: Lời khuyên cho người mới học
-
 description:
   zh: 这篇文章分享一些学习中文的好方法。对初学者很有帮助。
   en: This article shares some good methods for learning Chinese. Very helpful for beginners.
   vi: Bài viết này chia sẻ một số phương pháp hay để học tiếng Trung. Rất hữu ích cho người mới học.
-
 difficulty: HSK2-HSK3
 categories:
   - beginner
   - stories
+---

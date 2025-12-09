@@ -1,28 +1,25 @@
+---
 id: chinese-idiom-stories
-
 title:
   zh: 中国成语故事
   en: Chinese Idiom Stories
   vi: Truyện thành ngữ Trung Quốc
-
 subtitle:
   zh: 简单有趣的成语小故事
   en: Simple and fun idiom tales
   vi: Truyện thành ngữ đơn giản và thú vị
-
 author:
   zh: 民间故事
   en: Folk Tales
   vi: Truyện dân gian
-
 description:
   zh: 这本书收集了一些简单易懂的中国成语故事。每个故事都很短，适合初学者阅读。通过这些故事，你可以学习中国文化和常用成语。
   en: This book collects simple Chinese idiom stories. Each story is short and suitable for beginners. Through these stories, you can learn Chinese culture and common idioms.
   vi: Cuốn sách này tập hợp những câu chuyện thành ngữ Trung Quốc đơn giản. Mỗi câu chuyện đều ngắn gọn, phù hợp cho người mới học. Qua những câu chuyện này, bạn có thể học văn hóa Trung Quốc và các thành ngữ thông dụng.
-
 difficulty: HSK3-HSK4
 categories:
   - intermediate
   - stories
   - idioms
 status: ongoing
+---
