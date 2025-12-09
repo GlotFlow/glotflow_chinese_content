@@ -242,8 +242,6 @@ collections:
     label_singular: "Article"
     folder: content/articles
     create: true
-    extension: yaml
-    format: yaml
     slug: "{{id}}"
     identifier_field: id
     fields:
@@ -297,6 +295,10 @@ collections:
           - { label: "Intermediate", value: "intermediate" }
           - { label: "Advanced", value: "advanced" }
           - { label: "Stories", value: "stories" }
+
+      - name: body
+        label: "Content"
+        widget: markdown
 
   # ========================================
   # CONFIGURATION

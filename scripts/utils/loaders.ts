@@ -171,27 +171,21 @@ export async function loadArticles(baseDir: string): Promise<(ArticleMeta & {
   const articlesDir = join(baseDir, CONTENT_DIR, 'articles');
   const articles: (ArticleMeta & { sourceUrl?: string; wordCount?: number })[] = [];
 
-  // Find all yaml files (flat article definitions)
-  const yamlFiles = await findFiles('*.yaml', articlesDir);
+  // Find all markdown files (articles with frontmatter + body)
+  const mdFiles = await findFiles('*.md', articlesDir);
 
-  for (const yamlPath of yamlFiles) {
-    const articleSlug = basename(yamlPath, '.yaml');
-    const articleDir = join(articlesDir, articleSlug);
-    const contentPath = join(articleDir, 'content.md');
+  for (const mdPath of mdFiles) {
+    const articleSlug = basename(mdPath, '.md');
 
-    const metaRaw = await readYamlFile(yamlPath);
+    const { data: metaRaw, content } = await readMarkdownFile(mdPath);
     const meta = ArticleMetaSchema.parse({ ...metaRaw, type: 'article' });
 
-    // Calculate word count from content if exists
-    let wordCount: number | undefined;
-    if (await fileExists(contentPath)) {
-      const { content } = await readMarkdownFile(contentPath);
-      wordCount = countChineseCharacters(content);
-    }
+    // Calculate word count from body content
+    const wordCount = countChineseCharacters(content);
 
     articles.push({
       ...meta,
-      sourceUrl: `articles/${articleSlug}/content.md`,
+      sourceUrl: `articles/${articleSlug}.html`,
       wordCount,
     });
   }

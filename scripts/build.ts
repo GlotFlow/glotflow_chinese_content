@@ -65,27 +65,23 @@ async function processBookChapters(
 }
 
 /**
- * Convert article markdown to HTML
+ * Convert article markdown to HTML (new flat file format)
  */
-async function processArticle(
-  sourceDir: string,
+async function processArticleFile(
+  sourcePath: string,
   destDir: string,
+  articleSlug: string,
   articleTitle: string
 ): Promise<string> {
   await mkdir(destDir, { recursive: true });
 
-  const contentPath = join(sourceDir, 'content.md');
-  if (await fileExists(contentPath)) {
-    const { content } = await readMarkdownFile(contentPath);
-    const html = markdownToHtml(content, articleTitle);
+  const { content } = await readMarkdownFile(sourcePath);
+  const html = markdownToHtml(content, articleTitle);
 
-    const htmlPath = join(destDir, 'content.html');
-    await writeFile(htmlPath, html, 'utf-8');
+  const htmlPath = join(destDir, `${articleSlug}.html`);
+  await writeFile(htmlPath, html, 'utf-8');
 
-    return 'content.html';
-  }
-
-  return 'content.md';
+  return `${articleSlug}.html`;
 }
 
 async function build() {
@@ -158,24 +154,25 @@ async function build() {
     console.log(`✓ Generated books/${book.id}/ (${updatedChapters.length} HTML chapters)`);
   }
 
-  // Process articles: convert to HTML
+  // Process articles: convert to HTML (flat file format)
   const processedArticles: typeof articles = [];
+  const articlesDestDir = join(PUBLIC_DIR, 'articles');
   for (const article of articles) {
-    const sourceArticleDir = join(CONTENT_DIR, 'articles', article.id);
-    const destArticleDir = join(PUBLIC_DIR, 'articles', article.id);
+    const sourcePath = join(CONTENT_DIR, 'articles', `${article.id}.md`);
 
-    const outputFile = await processArticle(
-      sourceArticleDir,
-      destArticleDir,
+    const outputFile = await processArticleFile(
+      sourcePath,
+      articlesDestDir,
+      article.id,
       article.title.zh || article.title.en || article.id
     );
 
     processedArticles.push({
       ...article,
-      sourceUrl: `articles/${article.id}/${outputFile}`,
+      sourceUrl: `articles/${outputFile}`,
     });
 
-    console.log(`✓ Generated articles/${article.id}/ (HTML)`);
+    console.log(`✓ Generated articles/${outputFile}`);
   }
 
   // Build feed items with updated references
