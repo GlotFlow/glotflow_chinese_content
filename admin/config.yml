@@ -127,18 +127,26 @@ collections:
           - { label: "On Hold", value: "hiatus" }
 
   # ========================================
-  # BOOK CHAPTERS (separate collection)
+  # BOOK CHAPTERS (flat folder for Sveltia CMS)
   # ========================================
   - name: chapters
     label: "Book Chapters"
     label_singular: "Chapter"
-    folder: content/books/**/chapters
+    folder: content/chapters
     create: true
-    filter: { field: "type", value: "chapter" }
+    slug: "{{bookId}}-{{id}}"
     fields:
       - name: type
         widget: hidden
         default: "chapter"
+
+      - name: bookId
+        label: "Book"
+        widget: relation
+        collection: books
+        search_fields: ["id", "title.zh", "title.en"]
+        value_field: "id"
+        display_fields: ["title.zh"]
 
       - name: id
         label: "Chapter ID"

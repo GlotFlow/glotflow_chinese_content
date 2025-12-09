@@ -1,0 +1,39 @@
+---
+type: chapter
+bookId: chinese-idiom-stories
+id: "003"
+title:
+  zh: 刻舟求剑
+  en: "Marking the Boat to Find the Sword"
+  vi: "Khắc thuyền tìm kiếm"
+---
+# 刻舟求剑
+
+从前，有一个人坐船过河。他的剑不小心掉进了河里。
+
+船上的人都说："快跳下去捞剑！"
+
+但是这个人不着急。他拿出刀子，在船边刻了一个记号。
+
+其他人问他："你在做什么？"
+
+他说："我的剑是从这里掉下去的。我在这里做个记号。等船到岸边，我再从这个记号的地方跳下去找剑。"
+
+船到了岸边。这个人从记号的地方跳进水里。但是他找了很久，什么也没找到。
+
+他的剑早就沉到河底了。船已经走了很远，记号有什么用呢？
+
+---
+
+**成语解释：** 刻舟求剑
+
+这个成语告诉我们：情况会变化，我们要随机应变，不能用老方法解决新问题。
+
+**生词：**
+- 掉 (diào) - to drop, to fall
+- 捞 (lāo) - to fish out
+- 刻 (kè) - to carve
+- 记号 (jìhao) - mark
+- 岸边 (àn biān) - shore
+- 沉 (chén) - to sink
+- 随机应变 (suí jī yìng biàn) - adapt to circumstances
