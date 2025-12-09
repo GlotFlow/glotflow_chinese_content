@@ -1,0 +1,24 @@
+id: chairmans-bao
+
+title:
+  zh: The Chairman's Bao
+  en: The Chairman's Bao
+  vi: The Chairman's Bao
+
+subtitle:
+  zh: 中文新闻阅读
+  en: Chinese news reading
+  vi: Đọc tin tức tiếng Trung
+
+description:
+  zh: The Chairman's Bao 提供简化的中文新闻文章。每篇文章都按照 HSK 等级分类，帮助你在阅读真实新闻的同时提高中文水平。
+  en: The Chairman's Bao provides simplified Chinese news articles. Each article is categorized by HSK level, helping you improve your Chinese while reading real news.
+  vi: The Chairman's Bao cung cấp các bài báo tiếng Trung được đơn giản hóa. Mỗi bài viết được phân loại theo cấp độ HSK, giúp bạn cải thiện tiếng Trung trong khi đọc tin tức thực tế.
+
+imageUrl: https://www.thechairmansbao.com/wp-content/themes/developer/img/tcb-logo.svg
+homeUrl: https://www.thechairmansbao.com/
+difficulty: HSK2-HSK5
+categories:
+  - intermediate
+  - graded
+  - sites

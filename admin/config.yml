@@ -1,0 +1,316 @@
+# Decap CMS Configuration for GlotFlow Content
+
+backend:
+  name: github
+  repo: glotflow/glotflow-content  # Update this to your repo
+  branch: main
+  base_url: https://glotflow.github.io  # Update for OAuth if needed
+
+# Media files storage
+media_folder: static/images
+public_folder: /images
+
+# Locale settings
+locale: en
+
+# Editorial workflow (optional - enables draft/review/publish)
+# publish_mode: editorial_workflow
+
+# Collections
+collections:
+  # ========================================
+  # BOOKS
+  # ========================================
+  - name: books
+    label: "Books"
+    label_singular: "Book"
+    folder: content/books
+    create: true
+    nested:
+      depth: 100
+    meta: { path: { widget: parent, label: "Path", index_file: "_meta" } }
+    fields:
+      - name: id
+        label: "ID (slug)"
+        widget: string
+        pattern: ['^[a-z0-9-]+$', "Only lowercase letters, numbers, and hyphens"]
+
+      - name: title
+        label: "Title"
+        widget: object
+        fields:
+          - { name: zh, label: "Chinese", widget: string, required: true }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: subtitle
+        label: "Subtitle"
+        widget: object
+        required: false
+        fields:
+          - { name: zh, label: "Chinese", widget: string }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: author
+        label: "Author"
+        widget: object
+        required: false
+        fields:
+          - { name: zh, label: "Chinese", widget: string }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: description
+        label: "Description"
+        widget: object
+        required: false
+        fields:
+          - { name: zh, label: "Chinese", widget: text }
+          - { name: en, label: "English", widget: text }
+          - { name: vi, label: "Vietnamese", widget: text }
+
+      - name: difficulty
+        label: "Difficulty"
+        widget: select
+        options:
+          - { label: "HSK1-HSK2 (Beginner)", value: "HSK1-HSK2" }
+          - { label: "HSK3-HSK4 (Intermediate)", value: "HSK3-HSK4" }
+          - { label: "HSK5-HSK6 (Advanced)", value: "HSK5-HSK6" }
+
+      - name: categories
+        label: "Categories"
+        widget: select
+        multiple: true
+        options:
+          - { label: "Beginner", value: "beginner" }
+          - { label: "Intermediate", value: "intermediate" }
+          - { label: "Advanced", value: "advanced" }
+          - { label: "Stories", value: "stories" }
+          - { label: "Graded Readers", value: "graded" }
+          - { label: "Idioms", value: "idioms" }
+
+      - name: status
+        label: "Status"
+        widget: select
+        default: "ongoing"
+        options:
+          - { label: "Complete", value: "complete" }
+          - { label: "Ongoing", value: "ongoing" }
+          - { label: "On Hold", value: "hiatus" }
+
+  # ========================================
+  # BOOK CHAPTERS (separate collection)
+  # ========================================
+  - name: chapters
+    label: "Book Chapters"
+    label_singular: "Chapter"
+    folder: content/books
+    create: true
+    nested:
+      depth: 100
+    filter: { field: "type", value: "chapter" }
+    fields:
+      - name: type
+        widget: hidden
+        default: "chapter"
+
+      - name: id
+        label: "Chapter ID"
+        widget: string
+        pattern: ['^[0-9]+$', "Chapter ID should be numbers (e.g., 001, 002)"]
+
+      - name: title
+        label: "Title"
+        widget: object
+        fields:
+          - { name: zh, label: "Chinese", widget: string, required: true }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: body
+        label: "Content"
+        widget: markdown
+
+  # ========================================
+  # PAGEBOOKS (External Sites)
+  # ========================================
+  - name: pagebooks
+    label: "External Sites"
+    label_singular: "Site"
+    folder: content/pagebooks
+    create: true
+    extension: yaml
+    format: yaml
+    fields:
+      - name: id
+        label: "ID (slug)"
+        widget: string
+        pattern: ['^[a-z0-9-]+$', "Only lowercase letters, numbers, and hyphens"]
+
+      - name: title
+        label: "Title"
+        widget: object
+        fields:
+          - { name: zh, label: "Chinese", widget: string, required: true }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: subtitle
+        label: "Subtitle"
+        widget: object
+        required: false
+        fields:
+          - { name: zh, label: "Chinese", widget: string }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: description
+        label: "Description"
+        widget: object
+        required: false
+        fields:
+          - { name: zh, label: "Chinese", widget: text }
+          - { name: en, label: "English", widget: text }
+          - { name: vi, label: "Vietnamese", widget: text }
+
+      - name: homeUrl
+        label: "Website URL"
+        widget: string
+
+      - name: imageUrl
+        label: "Logo URL"
+        widget: string
+        required: false
+
+      - name: difficulty
+        label: "Difficulty Range"
+        widget: select
+        options:
+          - { label: "HSK1-HSK2", value: "HSK1-HSK2" }
+          - { label: "HSK1-HSK3", value: "HSK1-HSK3" }
+          - { label: "HSK1-HSK4", value: "HSK1-HSK4" }
+          - { label: "HSK2-HSK4", value: "HSK2-HSK4" }
+          - { label: "HSK2-HSK5", value: "HSK2-HSK5" }
+          - { label: "HSK3-HSK5", value: "HSK3-HSK5" }
+          - { label: "HSK3-HSK6", value: "HSK3-HSK6" }
+
+      - name: categories
+        label: "Categories"
+        widget: select
+        multiple: true
+        options:
+          - { label: "Beginner", value: "beginner" }
+          - { label: "Intermediate", value: "intermediate" }
+          - { label: "Advanced", value: "advanced" }
+          - { label: "Stories", value: "stories" }
+          - { label: "Graded Readers", value: "graded" }
+          - { label: "Learning Sites", value: "sites" }
+
+  # ========================================
+  # ARTICLES
+  # ========================================
+  - name: articles
+    label: "Articles"
+    label_singular: "Article"
+    folder: content/articles
+    create: true
+    nested:
+      depth: 100
+    meta: { path: { widget: parent, label: "Path", index_file: "_meta" } }
+    fields:
+      - name: id
+        label: "ID (slug)"
+        widget: string
+        pattern: ['^[a-z0-9-]+$', "Only lowercase letters, numbers, and hyphens"]
+
+      - name: title
+        label: "Title"
+        widget: object
+        fields:
+          - { name: zh, label: "Chinese", widget: string, required: true }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: subtitle
+        label: "Subtitle"
+        widget: object
+        required: false
+        fields:
+          - { name: zh, label: "Chinese", widget: string }
+          - { name: en, label: "English", widget: string }
+          - { name: vi, label: "Vietnamese", widget: string }
+
+      - name: description
+        label: "Description"
+        widget: object
+        required: false
+        fields:
+          - { name: zh, label: "Chinese", widget: text }
+          - { name: en, label: "English", widget: text }
+          - { name: vi, label: "Vietnamese", widget: text }
+
+      - name: difficulty
+        label: "Difficulty"
+        widget: select
+        options:
+          - { label: "HSK1-HSK2 (Beginner)", value: "HSK1-HSK2" }
+          - { label: "HSK2-HSK3 (Elementary)", value: "HSK2-HSK3" }
+          - { label: "HSK3-HSK4 (Intermediate)", value: "HSK3-HSK4" }
+          - { label: "HSK4-HSK5 (Upper-Intermediate)", value: "HSK4-HSK5" }
+          - { label: "HSK5-HSK6 (Advanced)", value: "HSK5-HSK6" }
+
+      - name: categories
+        label: "Categories"
+        widget: select
+        multiple: true
+        options:
+          - { label: "Beginner", value: "beginner" }
+          - { label: "Intermediate", value: "intermediate" }
+          - { label: "Advanced", value: "advanced" }
+          - { label: "Stories", value: "stories" }
+
+  # ========================================
+  # CONFIGURATION
+  # ========================================
+  - name: config
+    label: "Configuration"
+    files:
+      - name: settings
+        label: "Settings"
+        file: content/_config/settings.yaml
+        fields:
+          - { name: version, label: "Feed Version", widget: string }
+          - { name: defaultLocale, label: "Default Locale", widget: string }
+          - name: supportedLocales
+            label: "Supported Locales"
+            widget: list
+            field: { name: locale, label: "Locale", widget: string }
+
+      - name: featured
+        label: "Featured Items"
+        file: content/_config/featured.yaml
+        fields:
+          - name: featured
+            label: "Featured Item IDs"
+            widget: list
+            field: { name: id, label: "Item ID", widget: string }
+
+      - name: categories
+        label: "Categories"
+        file: content/_config/categories.yaml
+        fields:
+          - name: categories
+            label: "Categories"
+            widget: list
+            fields:
+              - { name: id, label: "ID", widget: string }
+              - name: name
+                label: "Name"
+                widget: object
+                fields:
+                  - { name: zh, label: "Chinese", widget: string }
+                  - { name: en, label: "English", widget: string }
+                  - { name: vi, label: "Vietnamese", widget: string }
+              - { name: icon, label: "Material Icon", widget: string }
+              - { name: order, label: "Order", widget: number }

@@ -1,0 +1,25 @@
+id: duchinese
+
+title:
+  zh: Du Chinese
+  en: Du Chinese
+  vi: Du Chinese
+
+subtitle:
+  zh: 分级中文故事
+  en: Graded Chinese stories
+  vi: Truyện tiếng Trung phân cấp
+
+description:
+  zh: Du Chinese 提供高质量的分级中文故事。适合各个水平的学习者，从初学者到高级。每个故事都有拼音、翻译和生词表。
+  en: Du Chinese offers high-quality graded Chinese stories. Suitable for learners at all levels, from beginner to advanced. Each story includes pinyin, translation, and vocabulary lists.
+  vi: Du Chinese cung cấp các câu chuyện tiếng Trung phân cấp chất lượng cao. Phù hợp cho người học ở mọi trình độ, từ người mới đến nâng cao. Mỗi câu chuyện đều có pinyin, bản dịch và danh sách từ vựng.
+
+imageUrl: https://www.duchinese.net/static/img/logo.png
+homeUrl: https://www.duchinese.net/
+difficulty: HSK1-HSK4
+categories:
+  - beginner
+  - intermediate
+  - graded
+  - sites

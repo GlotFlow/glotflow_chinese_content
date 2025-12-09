@@ -1,0 +1,6 @@
+version: "1.0"
+defaultLocale: zh
+supportedLocales:
+  - zh
+  - en
+  - vi

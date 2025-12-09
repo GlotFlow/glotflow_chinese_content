@@ -1,0 +1,56 @@
+categories:
+  - id: beginner
+    name:
+      zh: 初学者
+      en: Beginner
+      vi: Người mới
+    icon: school
+    order: 0
+
+  - id: intermediate
+    name:
+      zh: 中级
+      en: Intermediate
+      vi: Trung cấp
+    icon: trending_up
+    order: 1
+
+  - id: advanced
+    name:
+      zh: 高级
+      en: Advanced
+      vi: Nâng cao
+    icon: workspace_premium
+    order: 2
+
+  - id: stories
+    name:
+      zh: 故事
+      en: Stories
+      vi: Truyện
+    icon: auto_stories
+    order: 3
+
+  - id: graded
+    name:
+      zh: 分级读物
+      en: Graded Readers
+      vi: Sách phân cấp
+    icon: format_list_numbered
+    order: 4
+
+  - id: idioms
+    name:
+      zh: 成语
+      en: Idioms
+      vi: Thành ngữ
+    icon: lightbulb
+    order: 5
+
+  - id: sites
+    name:
+      zh: 学习网站
+      en: Learning Sites
+      vi: Trang học
+    icon: language
+    order: 6

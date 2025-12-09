@@ -1,0 +1,23 @@
+id: mandarin-bean
+
+title:
+  zh: Mandarin Bean
+  en: Mandarin Bean
+  vi: Mandarin Bean
+
+subtitle:
+  zh: 免费中文故事
+  en: Free Chinese stories
+  vi: Truyện tiếng Trung miễn phí
+
+description:
+  zh: Mandarin Bean 提供免费的中文短篇故事。网站简单易用，适合初学者。所有故事都有拼音和英文翻译。
+  en: Mandarin Bean offers free Chinese short stories. The website is simple and easy to use, suitable for beginners. All stories include pinyin and English translations.
+  vi: Mandarin Bean cung cấp các câu chuyện ngắn tiếng Trung miễn phí. Trang web đơn giản và dễ sử dụng, phù hợp cho người mới học. Tất cả câu chuyện đều có pinyin và bản dịch tiếng Anh.
+
+homeUrl: https://mandarinbean.com/
+difficulty: HSK1-HSK3
+categories:
+  - beginner
+  - stories
+  - sites
