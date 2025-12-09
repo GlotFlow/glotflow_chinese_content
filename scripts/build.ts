@@ -1,12 +1,13 @@
 #!/usr/bin/env tsx
 
-import { join, dirname } from 'path';
+import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
-import { mkdir, rm } from 'fs/promises';
+import { mkdir, rm, readFile, writeFile, readdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import { loadConfig, loadBooks, loadPagebooks, loadArticles } from './utils/loaders.js';
-import { writeJsonFile, copyDir, copyFileToDir, fileExists } from './utils/files.js';
-import type { Feed, FeedItem, BookManifest } from './types.js';
+import { writeJsonFile, copyDir, copyFileToDir, fileExists, readMarkdownFile } from './utils/files.js';
+import { markdownToHtml } from './utils/markdown.js';
+import type { Feed, FeedItem, BookManifest, BookChapter } from './types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BASE_DIR = join(__dirname, '..');
@@ -18,6 +19,73 @@ async function cleanPublicDir() {
     await rm(PUBLIC_DIR, { recursive: true });
   }
   await mkdir(PUBLIC_DIR, { recursive: true });
+}
+
+/**
+ * Convert chapter markdown files to HTML and update file references
+ */
+async function processBookChapters(
+  sourceChaptersDir: string,
+  destChaptersDir: string,
+  chapters: BookChapter[],
+  bookTitle: string
+): Promise<BookChapter[]> {
+  await mkdir(destChaptersDir, { recursive: true });
+
+  const updatedChapters: BookChapter[] = [];
+
+  for (const chapter of chapters) {
+    const mdFileName = chapter.file.replace('chapters/', '');
+    const sourcePath = join(sourceChaptersDir, mdFileName);
+
+    if (await fileExists(sourcePath)) {
+      // Read markdown content
+      const { content } = await readMarkdownFile(sourcePath);
+
+      // Convert to HTML with title
+      const chapterTitle = chapter.title.zh || chapter.title.en || `Chapter ${chapter.id}`;
+      const html = markdownToHtml(content, `${bookTitle} - ${chapterTitle}`);
+
+      // Write HTML file
+      const htmlFileName = mdFileName.replace('.md', '.html');
+      const destPath = join(destChaptersDir, htmlFileName);
+      await writeFile(destPath, html, 'utf-8');
+
+      // Update chapter reference to .html
+      updatedChapters.push({
+        ...chapter,
+        file: `chapters/${htmlFileName}`,
+      });
+    } else {
+      updatedChapters.push(chapter);
+    }
+  }
+
+  return updatedChapters;
+}
+
+/**
+ * Convert article markdown to HTML
+ */
+async function processArticle(
+  sourceDir: string,
+  destDir: string,
+  articleTitle: string
+): Promise<string> {
+  await mkdir(destDir, { recursive: true });
+
+  const contentPath = join(sourceDir, 'content.md');
+  if (await fileExists(contentPath)) {
+    const { content } = await readMarkdownFile(contentPath);
+    const html = markdownToHtml(content, articleTitle);
+
+    const htmlPath = join(destDir, 'content.html');
+    await writeFile(htmlPath, html, 'utf-8');
+
+    return 'content.html';
+  }
+
+  return 'content.md';
 }
 
 async function build() {
@@ -41,11 +109,80 @@ async function build() {
   const articles = await loadArticles(BASE_DIR);
   console.log(`✓ Loaded ${articles.length} articles`);
 
-  // Build feed items
+  // Process books: convert chapters to HTML
+  const processedBooks: typeof books = [];
+  for (const book of books) {
+    const bookDir = join(PUBLIC_DIR, 'books', book.id);
+    const sourceBookDir = join(CONTENT_DIR, 'books', book.id);
+    const sourceChaptersDir = join(sourceBookDir, 'chapters');
+    const destChaptersDir = join(bookDir, 'chapters');
+
+    // Convert chapters to HTML
+    const updatedChapters = await processBookChapters(
+      sourceChaptersDir,
+      destChaptersDir,
+      book.loadedChapters,
+      book.title.zh || book.title.en || book.id
+    );
+
+    // Copy cover image
+    for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+      const coverPath = join(sourceBookDir, `cover${ext}`);
+      if (await fileExists(coverPath)) {
+        await copyFileToDir(coverPath, bookDir);
+        break;
+      }
+    }
+
+    // Create manifest with updated chapter references
+    const manifest: BookManifest = {
+      id: book.id,
+      title: book.title,
+      subtitle: book.subtitle,
+      author: book.author,
+      description: book.description,
+      coverUrl: book.imageUrl ? book.imageUrl.replace(`books/${book.id}/`, '') : undefined,
+      difficulty: book.difficulty,
+      totalChapters: updatedChapters.length,
+      status: book.status || 'ongoing',
+      chapters: updatedChapters,
+    };
+
+    await writeJsonFile(join(bookDir, '_index.json'), manifest);
+
+    processedBooks.push({
+      ...book,
+      loadedChapters: updatedChapters,
+    });
+
+    console.log(`✓ Generated books/${book.id}/ (${updatedChapters.length} HTML chapters)`);
+  }
+
+  // Process articles: convert to HTML
+  const processedArticles: typeof articles = [];
+  for (const article of articles) {
+    const sourceArticleDir = join(CONTENT_DIR, 'articles', article.id);
+    const destArticleDir = join(PUBLIC_DIR, 'articles', article.id);
+
+    const outputFile = await processArticle(
+      sourceArticleDir,
+      destArticleDir,
+      article.title.zh || article.title.en || article.id
+    );
+
+    processedArticles.push({
+      ...article,
+      sourceUrl: `articles/${article.id}/${outputFile}`,
+    });
+
+    console.log(`✓ Generated articles/${article.id}/ (HTML)`);
+  }
+
+  // Build feed items with updated references
   const items: FeedItem[] = [
-    ...books.map(({ loadedChapters, ...book }) => book as FeedItem),
+    ...processedBooks.map(({ loadedChapters, ...book }) => book as FeedItem),
     ...pagebooks.map(pb => pb as FeedItem),
-    ...articles.map(a => a as FeedItem),
+    ...processedArticles.map(a => a as FeedItem),
   ];
 
   // Create feed
@@ -71,53 +208,6 @@ async function build() {
   await writeJsonFile(join(PUBLIC_DIR, 'discover', 'feed.json'), feed);
   console.log('✓ Generated discover/feed.json');
 
-  // Generate book manifests and copy chapters
-  for (const book of books) {
-    const bookDir = join(PUBLIC_DIR, 'books', book.id);
-    await mkdir(bookDir, { recursive: true });
-
-    // Create manifest
-    const manifest: BookManifest = {
-      id: book.id,
-      title: book.title,
-      subtitle: book.subtitle,
-      author: book.author,
-      description: book.description,
-      coverUrl: book.imageUrl ? book.imageUrl.replace(`books/${book.id}/`, '') : undefined,
-      difficulty: book.difficulty,
-      totalChapters: book.loadedChapters.length,
-      status: book.status || 'ongoing',
-      chapters: book.loadedChapters,
-    };
-
-    await writeJsonFile(join(bookDir, '_index.json'), manifest);
-
-    // Copy cover image
-    const sourceBookDir = join(CONTENT_DIR, 'books', book.id);
-    for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
-      const coverPath = join(sourceBookDir, `cover${ext}`);
-      if (await fileExists(coverPath)) {
-        await copyFileToDir(coverPath, bookDir);
-        break;
-      }
-    }
-
-    // Copy chapters
-    const sourceChaptersDir = join(sourceBookDir, 'chapters');
-    const destChaptersDir = join(bookDir, 'chapters');
-    await copyDir(sourceChaptersDir, destChaptersDir);
-
-    console.log(`✓ Generated books/${book.id}/ (${book.loadedChapters.length} chapters)`);
-  }
-
-  // Copy article content
-  for (const article of articles) {
-    const sourceArticleDir = join(CONTENT_DIR, 'articles', article.id);
-    const destArticleDir = join(PUBLIC_DIR, 'articles', article.id);
-    await copyDir(sourceArticleDir, destArticleDir);
-    console.log(`✓ Copied articles/${article.id}/`);
-  }
-
   // Copy static images
   const staticImagesDir = join(BASE_DIR, 'static', 'images');
   if (existsSync(staticImagesDir)) {
@@ -134,6 +224,7 @@ async function build() {
 
   console.log('\n✅ Build complete!');
   console.log(`   Feed: ${items.length} items (${books.length} books, ${pagebooks.length} sites, ${articles.length} articles)`);
+  console.log('   All chapters and articles converted to HTML');
 }
 
 build().catch(err => {
