@@ -40,7 +40,7 @@ locale: en
 logo_url: /images/logo.png
 
 # Site URL for previews
-site_url: https://glotflow.github.io/glotflow-content
+site_url: https://glotflow.github.io/glotflow_chinese_content
 
 # Collections
 collections:
