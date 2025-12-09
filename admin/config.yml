@@ -17,7 +17,7 @@
 
 backend:
   name: github
-  repo: glotflow/glotflow_chinese_content
+  repo: GlotFlow/glotflow_chinese_content
   branch: main
   # Uncomment and set your OAuth proxy URL for GitHub Pages deployment:
   # base_url: https://your-oauth-proxy.netlify.app
