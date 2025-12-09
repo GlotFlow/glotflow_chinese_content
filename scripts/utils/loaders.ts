@@ -75,7 +75,7 @@ export async function loadBooks(baseDir: string): Promise<(BookMeta & {
 
   for (const bookSlug of bookDirs) {
     const bookDir = join(booksDir, bookSlug);
-    const metaPath = join(bookDir, 'index.md');
+    const metaPath = join(bookDir, '_index.md');
 
     if (!(await fileExists(metaPath))) continue;
 
@@ -186,7 +186,7 @@ export async function loadArticles(baseDir: string): Promise<(ArticleMeta & {
 
   for (const articleSlug of articleDirs) {
     const articleDir = join(articlesDir, articleSlug);
-    const metaPath = join(articleDir, 'index.md');
+    const metaPath = join(articleDir, '_index.md');
     const contentPath = join(articleDir, 'content.md');
 
     if (!(await fileExists(metaPath))) continue;

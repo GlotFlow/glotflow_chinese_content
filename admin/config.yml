@@ -55,7 +55,7 @@ collections:
     nested:
       depth: 100
       summary: "{{title.zh}}"
-    meta: { path: { widget: string, label: "Path", index_file: "index" } }
+    meta: { path: { widget: string, label: "Path", index_file: "_index" } }
     fields:
       - name: id
         label: "ID (slug)"
@@ -245,7 +245,7 @@ collections:
     nested:
       depth: 100
       summary: "{{title.zh}}"
-    meta: { path: { widget: string, label: "Path", index_file: "index" } }
+    meta: { path: { widget: string, label: "Path", index_file: "_index" } }
     fields:
       - name: id
         label: "ID (slug)"
