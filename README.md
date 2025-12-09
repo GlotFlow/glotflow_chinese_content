@@ -105,14 +105,52 @@ All text fields support localization with fallback chain: `locale → en → zh`
 
 Supported locales: `zh` (Chinese), `en` (English), `vi` (Vietnamese)
 
-## Admin Interface
+## Admin Interface (Decap CMS)
 
-Visit `/admin/` to access Decap CMS for visual editing.
+Visit `/admin/` to access Decap CMS for visual content editing.
 
-**Setup Requirements:**
-1. Configure GitHub OAuth in `admin/config.yml`
-2. Update `repo` to your GitHub repository
-3. Deploy to GitHub Pages
+### Local Development
+
+```bash
+# Terminal 1: Start local CMS proxy
+npm run cms
+
+# Terminal 2: Build and serve
+npm run serve
+
+# Access CMS at http://localhost:8080/admin/
+```
+
+Enable local backend in `admin/config.yml`:
+```yaml
+local_backend: true
+```
+
+### Production Setup (GitHub Pages)
+
+Choose one of these authentication methods:
+
+**Option 1: Sveltia CMS (Recommended)**
+- Replace `decap-cms.js` with `sveltia-cms.js` in `admin/index.html`
+- Built-in GitHub OAuth - no external server needed
+
+**Option 2: External OAuth Proxy**
+1. Deploy [netlify-cms-github-oauth-provider](https://github.com/vencax/netlify-cms-github-oauth-provider) to Netlify/Vercel
+2. Create GitHub OAuth App (Settings > Developer > OAuth Apps)
+3. Update `admin/config.yml`:
+   ```yaml
+   backend:
+     name: github
+     repo: your-username/glotflow-content
+     branch: main
+     base_url: https://your-oauth-proxy.netlify.app
+     auth_endpoint: /oauth
+   ```
+
+**Option 3: Netlify Hosting**
+- Deploy to Netlify instead of GitHub Pages
+- Enable Netlify Identity
+- Use `git-gateway` backend
 
 ## Deployment
 

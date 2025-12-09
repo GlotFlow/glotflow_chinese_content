@@ -1,10 +1,30 @@
 # Decap CMS Configuration for GlotFlow Content
+# ================================================
+#
+# OAUTH SETUP FOR GITHUB PAGES:
+# -----------------------------
+# Option 1: Use Sveltia CMS (recommended - built-in GitHub OAuth)
+#   - Replace decap-cms.js with sveltia-cms.js in admin/index.html
+#   - No external OAuth needed
+#
+# Option 2: Deploy your own OAuth proxy
+#   - Deploy: https://github.com/vencax/netlify-cms-github-oauth-provider
+#   - Set base_url to your proxy URL
+#
+# Option 3: Use Netlify for hosting (simplest)
+#   - Enable Netlify Identity
+#   - Use git-gateway backend
 
 backend:
   name: github
-  repo: glotflow/glotflow-content  # Update this to your repo
+  repo: glotflow/glotflow_chinese_content
   branch: main
-  base_url: https://glotflow.github.io  # Update for OAuth if needed
+  # Uncomment and set your OAuth proxy URL for GitHub Pages deployment:
+  # base_url: https://your-oauth-proxy.netlify.app
+  # auth_endpoint: /oauth
+
+# For local development with Decap CMS (not needed for Sveltia CMS):
+# local_backend: true
 
 # Media files storage
 media_folder: static/images
@@ -13,8 +33,14 @@ public_folder: /images
 # Locale settings
 locale: en
 
-# Editorial workflow (optional - enables draft/review/publish)
+# Editorial workflow (enables draft/review/publish)
 # publish_mode: editorial_workflow
+
+# Logo in sidebar
+logo_url: /images/logo.png
+
+# Site URL for previews
+site_url: https://glotflow.github.io/glotflow-content
 
 # Collections
 collections:
@@ -26,6 +52,8 @@ collections:
     label_singular: "Book"
     folder: content/books
     create: true
+    extension: yaml
+    format: yaml
     nested:
       depth: 100
     meta: { path: { widget: parent, label: "Path", index_file: "_meta" } }
@@ -215,6 +243,8 @@ collections:
     label_singular: "Article"
     folder: content/articles
     create: true
+    extension: yaml
+    format: yaml
     nested:
       depth: 100
     meta: { path: { widget: parent, label: "Path", index_file: "_meta" } }
