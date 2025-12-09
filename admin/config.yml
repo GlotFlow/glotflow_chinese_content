@@ -134,6 +134,8 @@ collections:
     label_singular: "Chapter"
     folder: content/chapters
     create: true
+    extension: md
+    format: frontmatter
     slug: "{{bookId}}-{{id}}"
     fields:
       - name: type
