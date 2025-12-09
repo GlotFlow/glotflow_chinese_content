@@ -132,10 +132,8 @@ collections:
   - name: chapters
     label: "Book Chapters"
     label_singular: "Chapter"
-    folder: content/books
+    folder: content/books/**/chapters
     create: true
-    nested:
-      depth: 100
     filter: { field: "type", value: "chapter" }
     fields:
       - name: type
