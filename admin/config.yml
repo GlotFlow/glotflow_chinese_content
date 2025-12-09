@@ -52,11 +52,10 @@ collections:
     label_singular: "Book"
     folder: content/books
     create: true
-    extension: yaml
-    format: yaml
     nested:
       depth: 100
-    meta: { path: { widget: parent, label: "Path", index_file: "_meta" } }
+      summary: "{{title.zh}}"
+    meta: { path: { widget: string, label: "Path", index_file: "index" } }
     fields:
       - name: id
         label: "ID (slug)"
@@ -243,11 +242,10 @@ collections:
     label_singular: "Article"
     folder: content/articles
     create: true
-    extension: yaml
-    format: yaml
     nested:
       depth: 100
-    meta: { path: { widget: parent, label: "Path", index_file: "_meta" } }
+      summary: "{{title.zh}}"
+    meta: { path: { widget: string, label: "Path", index_file: "index" } }
     fields:
       - name: id
         label: "ID (slug)"
