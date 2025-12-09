@@ -23,7 +23,7 @@ backend:
   # base_url: https://your-oauth-proxy.netlify.app
   # auth_endpoint: /oauth
 
-# For local development with Decap CMS (not needed for Sveltia CMS):
+# For local development with Decap CMS (not needed for Sveltia):
 # local_backend: true
 
 # Media files storage
@@ -52,10 +52,10 @@ collections:
     label_singular: "Book"
     folder: content/books
     create: true
-    nested:
-      depth: 100
-      summary: "{{title.zh}}"
-    meta: { path: { widget: string, label: "Path", index_file: "_index" } }
+    extension: yaml
+    format: yaml
+    slug: "{{id}}"
+    identifier_field: id
     fields:
       - name: id
         label: "ID (slug)"
@@ -242,10 +242,10 @@ collections:
     label_singular: "Article"
     folder: content/articles
     create: true
-    nested:
-      depth: 100
-      summary: "{{title.zh}}"
-    meta: { path: { widget: string, label: "Path", index_file: "_index" } }
+    extension: yaml
+    format: yaml
+    slug: "{{id}}"
+    identifier_field: id
     fields:
       - name: id
         label: "ID (slug)"

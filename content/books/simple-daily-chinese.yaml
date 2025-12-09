@@ -1,0 +1,22 @@
+id: simple-daily-chinese
+title:
+  zh: 简单日常中文
+  en: Simple Daily Chinese
+  vi: Tiếng Trung đơn giản hàng ngày
+subtitle:
+  zh: 每天学一点中文
+  en: Learn a little Chinese every day
+  vi: Học một chút tiếng Trung mỗi ngày
+author:
+  zh: GlotFlow
+  en: GlotFlow
+  vi: GlotFlow
+description:
+  zh: 这是一本为初学者准备的中文读物。每一课都很短，使用简单的词汇和句子。内容是关于日常生活的对话和故事。
+  en: This is a Chinese reader for beginners. Each lesson is short, using simple vocabulary and sentences. The content covers daily life conversations and stories.
+  vi: Đây là sách đọc tiếng Trung dành cho người mới học. Mỗi bài học đều ngắn gọn, sử dụng từ vựng và câu đơn giản. Nội dung về các đoạn hội thoại và câu chuyện trong cuộc sống hàng ngày.
+difficulty: HSK1-HSK2
+categories:
+  - beginner
+  - graded
+status: ongoing

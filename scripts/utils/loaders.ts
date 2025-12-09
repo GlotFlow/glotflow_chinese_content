@@ -66,27 +66,21 @@ export async function loadBooks(baseDir: string): Promise<(BookMeta & {
     loadedChapters: BookChapter[];
   })[] = [];
 
-  let bookDirs: string[];
-  try {
-    bookDirs = await readdir(booksDir);
-  } catch {
-    return books;
-  }
+  // Find all yaml files (flat book definitions)
+  const yamlFiles = await findFiles('*.yaml', booksDir);
 
-  for (const bookSlug of bookDirs) {
+  for (const yamlPath of yamlFiles) {
+    const bookSlug = basename(yamlPath, '.yaml');
     const bookDir = join(booksDir, bookSlug);
-    const metaPath = join(bookDir, '_index.md');
 
-    if (!(await fileExists(metaPath))) continue;
-
-    const { data: metaRaw } = await readMarkdownFile(metaPath);
+    const metaRaw = await readYamlFile(yamlPath);
     const meta = BookMetaSchema.parse({ ...metaRaw, type: 'book' });
 
-    // Load chapters
+    // Load chapters from subfolder if exists
     const chaptersDir = join(bookDir, 'chapters');
     const loadedChapters = await loadBookChapters(chaptersDir, bookSlug);
 
-    // Check for cover image
+    // Check for cover image in subfolder
     let imageUrl: string | undefined;
     for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
       if (await fileExists(join(bookDir, `cover${ext}`))) {
@@ -177,24 +171,18 @@ export async function loadArticles(baseDir: string): Promise<(ArticleMeta & {
   const articlesDir = join(baseDir, CONTENT_DIR, 'articles');
   const articles: (ArticleMeta & { sourceUrl?: string; wordCount?: number })[] = [];
 
-  let articleDirs: string[];
-  try {
-    articleDirs = await readdir(articlesDir);
-  } catch {
-    return articles;
-  }
+  // Find all yaml files (flat article definitions)
+  const yamlFiles = await findFiles('*.yaml', articlesDir);
 
-  for (const articleSlug of articleDirs) {
+  for (const yamlPath of yamlFiles) {
+    const articleSlug = basename(yamlPath, '.yaml');
     const articleDir = join(articlesDir, articleSlug);
-    const metaPath = join(articleDir, '_index.md');
     const contentPath = join(articleDir, 'content.md');
 
-    if (!(await fileExists(metaPath))) continue;
-
-    const { data: metaRaw } = await readMarkdownFile(metaPath);
+    const metaRaw = await readYamlFile(yamlPath);
     const meta = ArticleMetaSchema.parse({ ...metaRaw, type: 'article' });
 
-    // Calculate word count from content
+    // Calculate word count from content if exists
     let wordCount: number | undefined;
     if (await fileExists(contentPath)) {
       const { content } = await readMarkdownFile(contentPath);
