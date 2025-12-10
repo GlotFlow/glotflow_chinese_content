@@ -64,4 +64,4 @@ categories:
 - 壶 (hú) - pot (teapot)
 - 放松 (fàngsōng) - relax
 
-![Chinese Tea Culture](../images/chinese-tea-culture.png)
+![Chinese Tea Culture](./images/chinese-tea-culture.png)

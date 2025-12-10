@@ -66,4 +66,4 @@ categories:
 - 红包 (hóngbāo) - red packet (money gift)
 - 祝福 (zhùfú) - blessing
 
-![Mobile Payment](../images/mobile-payment.png)
+![Mobile Payment](./images/mobile-payment.png)

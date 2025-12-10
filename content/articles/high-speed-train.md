@@ -56,4 +56,4 @@ categories:
 - 护照 (hùzhào) - passport
 - 身份证 (shēnfènzhèng) - ID card
 
-![High Speed Train](../images/high-speed-train.png)
+![High Speed Train](./images/high-speed-train.png)
