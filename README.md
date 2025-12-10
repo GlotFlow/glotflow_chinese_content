@@ -189,6 +189,22 @@ This ensures image URLs work correctly:
 - Root: `/images/books/my-book/001.png`
 - Subpath: `/glotflow_chinese_content/images/books/my-book/001.png`
 
+### Feed Version
+
+The `version` field in `content/_config/settings.yaml` tracks content releases:
+
+```yaml
+version: "1.1"
+```
+
+**When to increment:** Bump the version when publishing content updates (new articles, books, or significant changes). This helps the app detect fresh content.
+
+```bash
+# Edit version in settings.yaml, then:
+npm run build
+git add -A && git commit -m "chore: bump feed version to X.X" && git push
+```
+
 ## Multi-Language Support
 
 All text fields support localization with fallback chain: `locale → en → zh`
