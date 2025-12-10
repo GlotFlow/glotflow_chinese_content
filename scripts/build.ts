@@ -131,18 +131,23 @@ async function build() {
       imageBasePath
     );
 
-    // Copy cover image
+    // Ensure centralized images directory exists
+    const destImagesDir = join(PUBLIC_DIR, 'images', 'books', book.id);
+    await mkdir(destImagesDir, { recursive: true });
+
+    // Copy cover image to centralized images folder
+    let coverFileName: string | undefined;
     for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
       const coverPath = join(sourceBookDir, `cover${ext}`);
       if (await fileExists(coverPath)) {
-        await copyFileToDir(coverPath, bookDir);
+        await copyFileToDir(coverPath, destImagesDir);
+        coverFileName = `cover${ext}`;
         break;
       }
     }
 
     // Copy book-specific images to centralized /images/books/{bookId}/
     const sourceImagesDir = join(sourceBookDir, 'images');
-    const destImagesDir = join(PUBLIC_DIR, 'images', 'books', book.id);
     if (existsSync(sourceImagesDir)) {
       await copyDir(sourceImagesDir, destImagesDir);
     }
@@ -154,7 +159,7 @@ async function build() {
       subtitle: book.subtitle,
       author: book.author,
       description: book.description,
-      coverUrl: book.imageUrl ? book.imageUrl.replace(`books/${book.id}/`, '') : undefined,
+      coverUrl: coverFileName ? `${basePath}/images/books/${book.id}/${coverFileName}` : undefined,
       difficulty: book.difficulty,
       totalChapters: updatedChapters.length,
       status: book.status || 'ongoing',
@@ -165,6 +170,7 @@ async function build() {
 
     processedBooks.push({
       ...book,
+      imageUrl: coverFileName ? `${basePath}/images/books/${book.id}/${coverFileName}` : undefined,
       loadedChapters: updatedChapters,
     });
 
