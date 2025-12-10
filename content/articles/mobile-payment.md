@@ -13,6 +13,7 @@ description:
   en: In China, you only need a mobile phone to buy things, take a bus, or eat.
   vi: Ở Trung Quốc, bạn chỉ cần một chiếc điện thoại di động là có thể mua sắm, đi xe, hay ăn uống.
 difficulty: HSK3
+createdAt: "2024-12-08"
 categories:
   - technology
   - lifestyle

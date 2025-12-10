@@ -13,6 +13,7 @@ description:
   en: Why do Chinese people like to drink tea? Tea is not just a drink, but a culture.
   vi: Tại sao người Trung Quốc thích uống trà? Trà không chỉ là đồ uống, mà còn là một nét văn hóa.
 difficulty: HSK3-HSK4
+createdAt: "2024-12-10"
 categories:
   - culture
   - lifestyle

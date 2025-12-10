@@ -205,6 +205,21 @@ npm run build
 git add -A && git commit -m "chore: bump feed version to X.X" && git push
 ```
 
+### Item Ordering (createdAt)
+
+Add optional `createdAt` field to control feed order:
+
+```yaml
+# In any content file (book, article, pagebook)
+createdAt: "2024-12-10"
+```
+
+**Sorting logic:**
+- Items WITH `createdAt` appear first (newest date first)
+- Items WITHOUT `createdAt` appear after (in default order)
+
+This allows new content to automatically appear at the top without manually maintaining an order file.
+
 ## Multi-Language Support
 
 All text fields support localization with fallback chain: `locale → en → zh`

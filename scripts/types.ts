@@ -49,6 +49,7 @@ export const BookMetaSchema = z.object({
   categories: z.array(z.string()),
   status: ContentStatusSchema.optional(),
   chapters: z.array(BookChapterSchema).optional(),
+  createdAt: z.string().optional(), // Optional: YYYY-MM-DD for sorting (items with date appear first, newest first)
 });
 
 export type BookMeta = z.infer<typeof BookMetaSchema>;
@@ -64,6 +65,7 @@ export const PageBookSchema = z.object({
   homeUrl: z.string(),
   difficulty: z.string(),
   categories: z.array(z.string()),
+  createdAt: z.string().optional(), // Optional: YYYY-MM-DD for sorting
 });
 
 export type PageBook = z.infer<typeof PageBookSchema>;
@@ -79,11 +81,13 @@ export const ArticleMetaSchema = z.object({
   difficulty: z.string(),
   categories: z.array(z.string()),
   wordCount: z.number().optional(),
+  createdAt: z.string().optional(), // Optional: YYYY-MM-DD for sorting
 });
 
 export type ArticleMeta = z.infer<typeof ArticleMetaSchema>;
 
 // Feed item (union of all types)
+// Note: createdAt is inherited from base schemas for sorting (items with date first, newest first)
 export const FeedItemSchema = z.discriminatedUnion('type', [
   BookMetaSchema.extend({
     imageUrl: z.string().optional(),

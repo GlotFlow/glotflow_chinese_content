@@ -239,11 +239,28 @@ async function build() {
   }
 
   // Build feed items with updated references
-  const items: FeedItem[] = [
+  const unsortedItems: FeedItem[] = [
     ...processedBooks.map(({ loadedChapters, ...book }) => book as FeedItem),
     ...processedPagebooks.map(pb => pb as FeedItem),
     ...processedArticles.map(a => a as FeedItem),
   ];
+
+  // Sort items: items with createdAt first (newest first), then items without createdAt
+  const items = unsortedItems.sort((a, b) => {
+    const aDate = 'createdAt' in a ? a.createdAt : undefined;
+    const bDate = 'createdAt' in b ? b.createdAt : undefined;
+
+    // Both have dates: sort by date (newest first)
+    if (aDate && bDate) {
+      return bDate.localeCompare(aDate);
+    }
+    // Only a has date: a comes first
+    if (aDate && !bDate) return -1;
+    // Only b has date: b comes first
+    if (!aDate && bDate) return 1;
+    // Neither has date: keep original order
+    return 0;
+  });
 
   // Create feed
   const feed: Feed = {
