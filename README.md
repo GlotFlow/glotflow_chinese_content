@@ -9,7 +9,7 @@ This repository hosts curated Chinese learning content:
 - **PageBooks**: Links to external Chinese learning sites
 - **Articles**: Standalone Chinese learning articles
 
-Content is written in YAML/Markdown and built into JSON feeds for the app.
+Content is written in YAML/Markdown and built into JSON feeds + HTML for the app.
 
 ## Quick Start
 
@@ -17,14 +17,14 @@ Content is written in YAML/Markdown and built into JSON feeds for the app.
 # Install dependencies
 npm install
 
-# Build content (generates JSON + copies files)
+# Build content (generates JSON + HTML + copies images)
 npm run build
 
 # Validate output
 npm run validate
 
-# Watch mode (rebuild on changes)
-npm run dev
+# Build and serve locally
+npm run serve
 ```
 
 ## Project Structure
@@ -33,31 +33,32 @@ npm run dev
 glotflow_content/
 ├── content/
 │   ├── _config/
-│   │   ├── settings.yaml      # Version, locales
-│   │   ├── categories.yaml    # Category definitions
-│   │   └── featured.yaml      # Featured item IDs
+│   │   ├── settings.yaml        # Version, locales
+│   │   ├── categories.yaml      # Category definitions
+│   │   └── featured.yaml        # Featured item IDs
 │   ├── books/
+│   │   ├── {book-slug}.yaml     # Book metadata
 │   │   └── {book-slug}/
-│   │       ├── _meta.yaml     # Book metadata
-│   │       ├── cover.jpg      # Cover image (optional)
+│   │       ├── cover.jpg        # Cover image (optional)
+│   │       ├── images/          # Chapter images
+│   │       │   └── 001.png
 │   │       └── chapters/
-│   │           ├── 001.yaml   # Chapter metadata
-│   │           └── 001.md     # Chapter content
+│   │           └── 001.md       # Chapter content (with frontmatter)
 │   ├── pagebooks/
-│   │   └── {site-slug}.yaml   # External site entries
+│   │   └── {site-slug}.yaml     # External site entries
 │   └── articles/
-│       └── {article-slug}/
-│           ├── _meta.yaml     # Article metadata
-│           └── content.md     # Article content
-├── admin/                     # Decap CMS admin UI
-├── scripts/                   # Build scripts
-├── static/images/             # Shared images
-└── public/                    # Build output (gitignored)
+│       ├── {article-slug}.md    # Article (frontmatter + content)
+│       └── images/              # Shared article images
+│           └── image.png
+├── admin/                       # Sveltia CMS admin UI
+├── scripts/                     # Build scripts
+├── static/images/               # Shared static images
+└── public/                      # Build output (gitignored)
 ```
 
 ## Content Format
 
-### Book Meta (`_meta.yaml`)
+### Book Metadata (`books/{book-slug}.yaml`)
 
 ```yaml
 id: my-book
@@ -74,12 +75,21 @@ categories: [beginner, stories]
 status: ongoing
 ```
 
-### Chapter (`chapters/001.md`)
+### Chapter (`books/{book-slug}/chapters/001.md`)
 
 ```markdown
-# Chapter Title
+---
+id: "001"
+title:
+  zh: 第一章
+  en: Chapter 1
+  vi: Chương 1
+---
+# 第一章
 
 Chinese content here...
+
+![Image description](../images/001.png)
 
 ---
 
@@ -87,7 +97,26 @@ Chinese content here...
 - 词语 (cíyǔ) - word
 ```
 
-### PageBook (External Site)
+### Article (`articles/{article-slug}.md`)
+
+```markdown
+---
+id: my-article
+title:
+  zh: 文章标题
+  en: Article Title
+  vi: Tiêu đề bài viết
+difficulty: HSK2-HSK3
+categories: [beginner]
+---
+# 文章标题
+
+Article content here...
+
+![Image](./images/my-image.png)
+```
+
+### PageBook (`pagebooks/{site-slug}.yaml`)
 
 ```yaml
 id: duchinese
@@ -99,86 +128,97 @@ difficulty: HSK1-HSK4
 categories: [beginner, graded, sites]
 ```
 
+## Images
+
+Images are stored alongside content for easy editing, then centralized during build for CDN-friendly URLs.
+
+### Source Structure
+```
+content/
+├── books/{book}/images/     # Book-specific images
+└── articles/images/         # Shared article images
+```
+
+### Using Images in Content
+
+**In book chapters** (`content/books/{book}/chapters/001.md`):
+```markdown
+![Description](../images/filename.png)
+```
+
+**In articles** (`content/articles/my-article.md`):
+```markdown
+![Description](./images/filename.png)
+```
+
+### Build Output (CDN-friendly)
+```
+public/images/
+├── books/{book-slug}/       # /images/books/my-book/001.png
+└── articles/                # /images/articles/my-image.png
+```
+
+Image paths are automatically rewritten to absolute URLs during build.
+
 ## Multi-Language Support
 
 All text fields support localization with fallback chain: `locale → en → zh`
 
 Supported locales: `zh` (Chinese), `en` (English), `vi` (Vietnamese)
 
-## Admin Interface (Decap CMS)
+## Admin Interface (Sveltia CMS)
 
-Visit `/admin/` to access Decap CMS for visual content editing.
+Visit `/admin/` to access Sveltia CMS for visual content editing.
 
-### Local Development
+### Local Development (File System Mode)
 
-```bash
-# Terminal 1: Start local CMS proxy
-npm run cms
+1. Build and serve: `npm run serve`
+2. Open `http://localhost:8080/admin/`
+3. Click "Work with local repository"
+4. Select the `glotflow_content` folder (project root)
+5. Use Chrome/Edge (Firefox/Safari not supported)
 
-# Terminal 2: Build and serve
-npm run serve
+### Production (GitHub OAuth)
 
-# Access CMS at http://localhost:8080/admin/
-```
+Sveltia CMS has built-in GitHub OAuth - no external server needed.
 
-Enable local backend in `admin/config.yml`:
-```yaml
-local_backend: true
-```
-
-### Production Setup (GitHub Pages)
-
-Choose one of these authentication methods:
-
-**Option 1: Sveltia CMS (Recommended)**
-- Replace `decap-cms.js` with `sveltia-cms.js` in `admin/index.html`
-- Built-in GitHub OAuth - no external server needed
-
-**Option 2: External OAuth Proxy**
-1. Deploy [netlify-cms-github-oauth-provider](https://github.com/vencax/netlify-cms-github-oauth-provider) to Netlify/Vercel
-2. Create GitHub OAuth App (Settings > Developer > OAuth Apps)
-3. Update `admin/config.yml`:
+1. Ensure `admin/config.yml` has correct repo:
    ```yaml
    backend:
      name: github
-     repo: your-username/glotflow-content
+     repo: GlotFlow/glotflow_chinese_content
      branch: main
-     base_url: https://your-oauth-proxy.netlify.app
-     auth_endpoint: /oauth
    ```
-
-**Option 3: Netlify Hosting**
-- Deploy to Netlify instead of GitHub Pages
-- Enable Netlify Identity
-- Use `git-gateway` backend
+2. Access via GitHub Pages URL: `https://glotflow.github.io/glotflow_chinese_content/admin/`
 
 ## Deployment
 
 Push to `main` branch triggers GitHub Actions:
 1. Install dependencies
-2. Build JSON feeds
+2. Build JSON feeds + HTML
 3. Validate content
 4. Deploy to GitHub Pages
 
-## Output
+## Build Output
 
 After build, `public/` contains:
 
 ```
 public/
 ├── discover/
-│   └── feed.json           # Main content feed
+│   └── feed.json              # Main content feed
 ├── books/
 │   └── {book-slug}/
-│       ├── _index.json     # Book manifest
-│       ├── cover.jpg
+│       ├── _index.json        # Book manifest with chapters
+│       ├── cover.jpg          # Cover image (if exists)
 │       └── chapters/
-│           └── 001.md
+│           └── 001.html       # Chapter HTML (converted from MD)
 ├── articles/
-│   └── {article-slug}/
-│       └── content.md
-├── images/
-└── admin/                  # CMS interface
+│   └── {article-slug}.html    # Article HTML
+├── images/                    # CDN-friendly centralized images
+│   ├── books/{book-slug}/     # Book images
+│   └── articles/              # Article images
+└── admin/                     # CMS interface
 ```
 
 ## License
