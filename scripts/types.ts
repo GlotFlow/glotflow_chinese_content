@@ -75,6 +75,7 @@ export const ArticleMetaSchema = z.object({
   title: LocalizedStringSchema,
   subtitle: LocalizedStringSchema.optional(),
   description: LocalizedStringSchema.optional(),
+  coverImage: z.string().optional(), // Optional cover image path (auto-extracted from first image if not set)
   difficulty: z.string(),
   categories: z.array(z.string()),
   wordCount: z.number().optional(),
@@ -91,6 +92,7 @@ export const FeedItemSchema = z.discriminatedUnion('type', [
   }),
   PageBookSchema,
   ArticleMetaSchema.extend({
+    imageUrl: z.string().optional(), // Cover image URL for feed display
     sourceUrl: z.string().optional(),
   }),
 ]);

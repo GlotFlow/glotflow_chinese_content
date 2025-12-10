@@ -27,6 +27,16 @@ import {
 
 const CONTENT_DIR = 'content';
 
+/**
+ * Extract the first image path from markdown content
+ * Matches patterns like: ![alt](./images/filename.png) or ![alt](../images/filename.png)
+ */
+function extractFirstImage(markdown: string): string | undefined {
+  const imageRegex = /!\[.*?\]\((\.[^)]+)\)/;
+  const match = markdown.match(imageRegex);
+  return match ? match[1] : undefined;
+}
+
 interface Config {
   settings: {
     version: string;
@@ -167,10 +177,17 @@ export async function loadPagebooks(baseDir: string): Promise<PageBook[]> {
 
 export async function loadArticles(baseDir: string): Promise<(ArticleMeta & {
   sourceUrl?: string;
+  imageUrl?: string;
   wordCount?: number;
+  extractedImage?: string; // Raw extracted image path for build processing
 })[]> {
   const articlesDir = join(baseDir, CONTENT_DIR, 'articles');
-  const articles: (ArticleMeta & { sourceUrl?: string; wordCount?: number })[] = [];
+  const articles: (ArticleMeta & {
+    sourceUrl?: string;
+    imageUrl?: string;
+    wordCount?: number;
+    extractedImage?: string;
+  })[] = [];
 
   // Find all markdown files (articles with frontmatter + body)
   const mdFiles = await findFiles('*.md', articlesDir);
@@ -184,10 +201,14 @@ export async function loadArticles(baseDir: string): Promise<(ArticleMeta & {
     // Calculate word count from body content
     const wordCount = countChineseCharacters(content);
 
+    // Determine cover image: use explicit coverImage or extract first image from content
+    const extractedImage = meta.coverImage || extractFirstImage(content);
+
     articles.push({
       ...meta,
       sourceUrl: `articles/${articleSlug}.html`,
       wordCount,
+      extractedImage,
     });
   }
 

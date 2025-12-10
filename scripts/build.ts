@@ -193,12 +193,22 @@ async function build() {
       articleImageBasePath
     );
 
+    // Convert extracted image path to CDN-friendly URL
+    // ./images/filename.png -> /basePath/images/articles/filename.png
+    let imageUrl: string | undefined;
+    let coverName: string | undefined;
+    if (article.extractedImage) {
+      coverName = basename(article.extractedImage);
+      imageUrl = `${basePath}/images/articles/${coverName}`;
+    }
+
     processedArticles.push({
       ...article,
+      imageUrl,
       sourceUrl: `articles/${outputFile}`,
     });
 
-    console.log(`✓ Generated articles/${outputFile}`);
+    console.log(`✓ Generated articles/${outputFile}${coverName ? ` (cover: ${coverName})` : ''}`);
   }
 
   // Copy article images to centralized /images/articles/

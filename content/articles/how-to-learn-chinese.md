@@ -87,3 +87,5 @@ categories:
 - 翻译 (fānyì) - translate
 - 旅程 (lǚchéng) - journey
 - 加油 (jiāyóu) - keep going! (encouragement)
+
+![How to Learn Chinese](./images/how-to-learn-chinese.png)

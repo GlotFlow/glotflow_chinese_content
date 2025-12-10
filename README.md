@@ -118,6 +118,7 @@ title:
   vi: Tiêu đề bài viết
 difficulty: HSK2-HSK3
 categories: [beginner]
+coverImage: ./images/my-cover.png  # Optional: explicit cover image
 ---
 # 文章标题
 
@@ -125,6 +126,8 @@ Article content here...
 
 ![Image](./images/my-image.png)
 ```
+
+**Cover Image**: If `coverImage` is not specified, the build script automatically uses the first image found in the article content as the cover.
 
 ### PageBook (`pagebooks/{site-slug}.yaml`)
 
