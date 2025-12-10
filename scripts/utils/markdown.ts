@@ -7,10 +7,35 @@ marked.setOptions({
 });
 
 /**
+ * Rewrite relative image paths to absolute CDN-friendly paths
+ * Books: ../images/004.png -> /images/books/{bookSlug}/004.png
+ * Articles: ./images/image.png -> /images/articles/image.png
+ */
+export function rewriteImagePaths(markdown: string, imageBasePath?: string): string {
+  if (!imageBasePath) return markdown;
+
+  // Replace ../images/ (book chapters) with the absolute path
+  let result = markdown.replace(
+    /\(\.\.\/images\//g,
+    `(${imageBasePath}/`
+  );
+
+  // Replace ./images/ (articles) with the absolute path
+  result = result.replace(
+    /\(\.\/images\//g,
+    `(${imageBasePath}/`
+  );
+
+  return result;
+}
+
+/**
  * Convert markdown content to HTML with a wrapper suitable for WebView rendering
  */
-export function markdownToHtml(markdown: string, title?: string): string {
-  const content = marked.parse(markdown) as string;
+export function markdownToHtml(markdown: string, title?: string, imageBasePath?: string): string {
+  // Rewrite image paths before converting
+  const processedMarkdown = rewriteImagePaths(markdown, imageBasePath);
+  const content = marked.parse(processedMarkdown) as string;
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -70,6 +95,13 @@ export function markdownToHtml(markdown: string, title?: string): string {
       border-left: 3px solid #ddd;
       color: #666;
       background: #f9f9f9;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1em auto;
+      border-radius: 8px;
     }
     /* Vocabulary section styling */
     p strong:first-child {

@@ -28,7 +28,8 @@ async function processBookChapters(
   sourceChaptersDir: string,
   destChaptersDir: string,
   chapters: BookChapter[],
-  bookTitle: string
+  bookTitle: string,
+  imageBasePath?: string
 ): Promise<BookChapter[]> {
   await mkdir(destChaptersDir, { recursive: true });
 
@@ -42,9 +43,9 @@ async function processBookChapters(
       // Read markdown content
       const { content } = await readMarkdownFile(sourcePath);
 
-      // Convert to HTML with title
+      // Convert to HTML with title and rewrite image paths
       const chapterTitle = chapter.title.zh || chapter.title.en || `Chapter ${chapter.id}`;
-      const html = markdownToHtml(content, `${bookTitle} - ${chapterTitle}`);
+      const html = markdownToHtml(content, `${bookTitle} - ${chapterTitle}`, imageBasePath);
 
       // Write HTML file
       const htmlFileName = mdFileName.replace('.md', '.html');
@@ -71,12 +72,13 @@ async function processArticleFile(
   sourcePath: string,
   destDir: string,
   articleSlug: string,
-  articleTitle: string
+  articleTitle: string,
+  imageBasePath?: string
 ): Promise<string> {
   await mkdir(destDir, { recursive: true });
 
   const { content } = await readMarkdownFile(sourcePath);
-  const html = markdownToHtml(content, articleTitle);
+  const html = markdownToHtml(content, articleTitle, imageBasePath);
 
   const htmlPath = join(destDir, `${articleSlug}.html`);
   await writeFile(htmlPath, html, 'utf-8');
@@ -113,12 +115,16 @@ async function build() {
     const sourceChaptersDir = join(sourceBookDir, 'chapters');
     const destChaptersDir = join(bookDir, 'chapters');
 
-    // Convert chapters to HTML
+    // Image base path for CDN-friendly URLs
+    const imageBasePath = `/images/books/${book.id}`;
+
+    // Convert chapters to HTML with rewritten image paths
     const updatedChapters = await processBookChapters(
       sourceChaptersDir,
       destChaptersDir,
       book.loadedChapters,
-      book.title.zh || book.title.en || book.id
+      book.title.zh || book.title.en || book.id,
+      imageBasePath
     );
 
     // Copy cover image
@@ -128,6 +134,13 @@ async function build() {
         await copyFileToDir(coverPath, bookDir);
         break;
       }
+    }
+
+    // Copy book-specific images to centralized /images/books/{bookId}/
+    const sourceImagesDir = join(sourceBookDir, 'images');
+    const destImagesDir = join(PUBLIC_DIR, 'images', 'books', book.id);
+    if (existsSync(sourceImagesDir)) {
+      await copyDir(sourceImagesDir, destImagesDir);
     }
 
     // Create manifest with updated chapter references
@@ -157,6 +170,8 @@ async function build() {
   // Process articles: convert to HTML (flat file format)
   const processedArticles: typeof articles = [];
   const articlesDestDir = join(PUBLIC_DIR, 'articles');
+  const articleImageBasePath = '/images/articles';
+
   for (const article of articles) {
     const sourcePath = join(CONTENT_DIR, 'articles', `${article.id}.md`);
 
@@ -164,7 +179,8 @@ async function build() {
       sourcePath,
       articlesDestDir,
       article.id,
-      article.title.zh || article.title.en || article.id
+      article.title.zh || article.title.en || article.id,
+      articleImageBasePath
     );
 
     processedArticles.push({
@@ -173,6 +189,13 @@ async function build() {
     });
 
     console.log(`✓ Generated articles/${outputFile}`);
+  }
+
+  // Copy article images to centralized /images/articles/
+  const sourceArticleImagesDir = join(CONTENT_DIR, 'articles', 'images');
+  if (existsSync(sourceArticleImagesDir)) {
+    await copyDir(sourceArticleImagesDir, join(PUBLIC_DIR, 'images', 'articles'));
+    console.log('✓ Copied article images');
   }
 
   // Build feed items with updated references
