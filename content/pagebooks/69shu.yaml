@@ -15,7 +15,7 @@ description:
   en: 69shu offers a clean reading interface and rich novel resources.
   vi: 69shu cung cấp giao diện đọc đơn giản và nguồn tiểu thuyết phong phú.
 
-imageUrl: https://www.google.com/s2/favicons?domain=69shuba.com&sz=128
+imageUrl: ./images/69shu.png
 homeUrl: https://www.69shuba.com/
 difficulty: Native
 categories:

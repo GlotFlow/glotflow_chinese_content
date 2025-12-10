@@ -15,7 +15,7 @@ description:
   en: Qidian is the largest Chinese web novel site, featuring a massive collection of original works.
   vi: Qidian là trang web tiểu thuyết mạng tiếng Trung lớn nhất, với kho tàng tác phẩm gốc khổng lồ.
 
-imageUrl: https://gcore.jsdelivr.net/gh/ChrisHyperFunc/static-storage@main/img/qidian-cover.png
+imageUrl: ./images/qidian.png
 homeUrl: https://www.qidian.com/
 difficulty: Native
 categories:

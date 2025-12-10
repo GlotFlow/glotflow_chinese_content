@@ -15,7 +15,7 @@ description:
   en: XBiquge archives a large number of web novels and supports mobile reading.
   vi: XBiquge lưu trữ một lượng lớn tiểu thuyết mạng và hỗ trợ đọc trên di động.
 
-imageUrl: https://www.google.com/s2/favicons?domain=xbiquge.so&sz=128
+imageUrl: ./images/xbiquge.png
 homeUrl: https://www.xbiquge.so/
 difficulty: Native
 categories:

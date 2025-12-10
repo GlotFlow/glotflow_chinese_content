@@ -15,7 +15,7 @@ description:
   en: Novel Updates is like Goodreads for Asian novels, tracking translation updates.
   vi: Novel Updates giống như Goodreads cho tiểu thuyết châu Á, theo dõi cập nhật bản dịch.
 
-imageUrl: https://cdn.brandfetch.io/id4dRIpu4Z/w/400/h/400/theme/dark/logo.png
+imageUrl: ./images/novelupdates.png
 homeUrl: https://www.novelupdates.com/
 difficulty: Mix
 categories:

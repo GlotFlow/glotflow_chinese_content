@@ -218,10 +218,30 @@ async function build() {
     console.log('✓ Copied article images');
   }
 
+  // Process pagebook images: convert local paths to CDN URLs
+  const processedPagebooks = pagebooks.map(pb => {
+    // Check if imageUrl is a local path (starts with ./)
+    if (pb.imageUrl?.startsWith('./images/')) {
+      const imageName = basename(pb.imageUrl);
+      return {
+        ...pb,
+        imageUrl: `${basePath}/images/pagebooks/${imageName}`,
+      };
+    }
+    return pb;
+  });
+
+  // Copy pagebook images to centralized /images/pagebooks/
+  const sourcePagebookImagesDir = join(CONTENT_DIR, 'pagebooks', 'images');
+  if (existsSync(sourcePagebookImagesDir)) {
+    await copyDir(sourcePagebookImagesDir, join(PUBLIC_DIR, 'images', 'pagebooks'));
+    console.log('✓ Copied pagebook images');
+  }
+
   // Build feed items with updated references
   const items: FeedItem[] = [
     ...processedBooks.map(({ loadedChapters, ...book }) => book as FeedItem),
-    ...pagebooks.map(pb => pb as FeedItem),
+    ...processedPagebooks.map(pb => pb as FeedItem),
     ...processedArticles.map(a => a as FeedItem),
   ];
 
