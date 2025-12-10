@@ -55,6 +55,9 @@ collections:
     extension: yaml
     format: yaml
     slug: "{{id}}"
+    path: "{{slug}}/_index"
+    media_folder: ""
+    public_folder: ""
     identifier_field: id
     fields:
       - name: id

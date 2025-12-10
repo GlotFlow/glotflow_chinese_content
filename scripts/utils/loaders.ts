@@ -67,14 +67,14 @@ export async function loadBooks(baseDir: string): Promise<(BookMeta & {
     loadedChapters: BookChapter[];
   })[] = [];
 
-  // Find all yaml files (flat book definitions)
-  const yamlFiles = await findFiles('*.yaml', booksDir);
+  // Find all _index.yaml files inside book folders
+  const indexFiles = await findFiles('*/_index.yaml', booksDir);
 
-  for (const yamlPath of yamlFiles) {
-    const bookSlug = basename(yamlPath, '.yaml');
-    const bookDir = join(booksDir, bookSlug);
+  for (const indexPath of indexFiles) {
+    const bookDir = dirname(indexPath);
+    const bookSlug = basename(bookDir);
 
-    const metaRaw = await readYamlFile(yamlPath);
+    const metaRaw = await readYamlFile(indexPath);
     const meta = BookMetaSchema.parse({ ...metaRaw, type: 'book' });
 
     // Load chapters from subfolder if exists

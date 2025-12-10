@@ -47,8 +47,8 @@ glotflow_content/
 │   │   ├── categories.yaml      # Category definitions
 │   │   └── featured.yaml        # Featured item IDs
 │   ├── books/
-│   │   ├── {book-slug}.yaml     # Book metadata
 │   │   └── {book-slug}/
+│   │       ├── _index.yaml      # Book metadata
 │   │       ├── cover.jpg        # Cover image (optional)
 │   │       ├── images/          # Chapter images
 │   │       │   └── 001.png
@@ -68,7 +68,7 @@ glotflow_content/
 
 ## Content Format
 
-### Book Metadata (`books/{book-slug}.yaml`)
+### Book Metadata (`books/{book-slug}/_index.yaml`)
 
 ```yaml
 id: my-book
