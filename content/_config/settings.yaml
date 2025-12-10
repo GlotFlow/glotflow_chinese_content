@@ -4,3 +4,9 @@ supportedLocales:
   - zh
   - en
   - vi
+
+# Base path for deployment (empty for root, "/subpath" for GitHub Pages subpath)
+# Examples:
+#   basePath: ""                        # Root deployment or CDN
+#   basePath: "/glotflow_chinese_content"  # GitHub Pages subpath
+basePath: "/glotflow_chinese_content"

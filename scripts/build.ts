@@ -95,7 +95,11 @@ async function build() {
 
   // Load configuration
   const config = await loadConfig(BASE_DIR);
+  const basePath = config.settings.basePath || '';
   console.log(`✓ Loaded config: ${config.categories.length} categories, ${config.featured.length} featured`);
+  if (basePath) {
+    console.log(`✓ Using base path: ${basePath}`);
+  }
 
   // Load all content types
   const books = await loadBooks(BASE_DIR);
@@ -115,8 +119,8 @@ async function build() {
     const sourceChaptersDir = join(sourceBookDir, 'chapters');
     const destChaptersDir = join(bookDir, 'chapters');
 
-    // Image base path for CDN-friendly URLs
-    const imageBasePath = `/images/books/${book.id}`;
+    // Image base path for CDN-friendly URLs (with basePath for subpath deployments)
+    const imageBasePath = `${basePath}/images/books/${book.id}`;
 
     // Convert chapters to HTML with rewritten image paths
     const updatedChapters = await processBookChapters(
@@ -170,7 +174,7 @@ async function build() {
   // Process articles: convert to HTML (flat file format)
   const processedArticles: typeof articles = [];
   const articlesDestDir = join(PUBLIC_DIR, 'articles');
-  const articleImageBasePath = '/images/articles';
+  const articleImageBasePath = `${basePath}/images/articles`;
 
   for (const article of articles) {
     const sourcePath = join(CONTENT_DIR, 'articles', `${article.id}.md`);

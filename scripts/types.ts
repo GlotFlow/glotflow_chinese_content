@@ -131,6 +131,7 @@ export const SettingsSchema = z.object({
   version: z.string(),
   defaultLocale: z.string(),
   supportedLocales: z.array(z.string()),
+  basePath: z.string().optional().default(''),
 });
 
 export const CategoriesConfigSchema = z.object({

@@ -154,11 +154,27 @@ content/
 ### Build Output (CDN-friendly)
 ```
 public/images/
-├── books/{book-slug}/       # /images/books/my-book/001.png
-└── articles/                # /images/articles/my-image.png
+├── books/{book-slug}/       # {basePath}/images/books/my-book/001.png
+└── articles/                # {basePath}/images/articles/my-image.png
 ```
 
-Image paths are automatically rewritten to absolute URLs during build.
+Image paths are automatically rewritten to absolute URLs during build, including the configured `basePath`.
+
+### Base Path Configuration
+
+For subpath deployments (e.g., GitHub Pages), configure `basePath` in `content/_config/settings.yaml`:
+
+```yaml
+# Root deployment (CDN or custom domain)
+basePath: ""
+
+# GitHub Pages subpath deployment
+basePath: "/glotflow_chinese_content"
+```
+
+This ensures image URLs work correctly:
+- Root: `/images/books/my-book/001.png`
+- Subpath: `/glotflow_chinese_content/images/books/my-book/001.png`
 
 ## Multi-Language Support
 

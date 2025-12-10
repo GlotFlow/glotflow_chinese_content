@@ -32,6 +32,7 @@ interface Config {
     version: string;
     defaultLocale: string;
     supportedLocales: string[];
+    basePath: string;
   };
   categories: Category[];
   featured: string[];
