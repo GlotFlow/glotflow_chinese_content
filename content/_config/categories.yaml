@@ -54,3 +54,67 @@ categories:
       vi: Trang học
     icon: language
     order: 6
+
+  - id: novels
+    name:
+      zh: 小说
+      en: Novels
+      vi: Tiểu thuyết
+    icon: menu_book
+    order: 7
+
+  - id: translation
+    name:
+      zh: 翻译
+      en: Translation
+      vi: Bản dịch
+    icon: translate
+    order: 8
+
+  - id: original
+    name:
+      zh: 原创
+      en: Original
+      vi: Nguyên tác
+    icon: edit_note
+    order: 9
+
+  - id: directory
+    name:
+      zh: 目录索引
+      en: Directory
+      vi: Danh mục
+    icon: folder_open
+    order: 10
+
+  - id: technology
+    name:
+      zh: 科技
+      en: Technology
+      vi: Công nghệ
+    icon: devices
+    order: 11
+
+  - id: lifestyle
+    name:
+      zh: 生活
+      en: Lifestyle
+      vi: Cuộc sống
+    icon: local_cafe
+    order: 12
+
+  - id: travel
+    name:
+      zh: 旅游
+      en: Travel
+      vi: Du lịch
+    icon: flight
+    order: 13
+
+  - id: culture
+    name:
+      zh: 文化
+      en: Culture
+      vi: Văn hóa
+    icon: temple_buddhist
+    order: 14
