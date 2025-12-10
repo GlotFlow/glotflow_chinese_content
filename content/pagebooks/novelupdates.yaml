@@ -1,0 +1,23 @@
+id: novelupdates
+
+title:
+  zh: Novel Updates
+  en: Novel Updates
+  vi: Novel Updates
+
+subtitle:
+  zh: 小说更新索引
+  en: Novel Directory
+  vi: Danh mục tiểu thuyết
+
+description:
+  zh: Novel Updates 就像亚洲小说的 Goodreads，追踪翻译更新。
+  en: Novel Updates is like Goodreads for Asian novels, tracking translation updates.
+  vi: Novel Updates giống như Goodreads cho tiểu thuyết châu Á, theo dõi cập nhật bản dịch.
+
+imageUrl: https://placehold.co/600x400?text=NovelUpdates
+homeUrl: https://www.novelupdates.com/
+difficulty: Mix
+categories:
+  - sites
+  - directory

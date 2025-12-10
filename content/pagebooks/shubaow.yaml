@@ -1,0 +1,23 @@
+id: shubaow
+
+title:
+  zh: 书包网
+  en: Shubaow
+  vi: Shubaow
+
+subtitle:
+  zh: 全本小说
+  en: Completed Novels
+  vi: Tiểu thuyết hoàn thành
+
+description:
+  zh: 书包网专注提供全本完结小说下载和在线阅读。
+  en: Shubaow focuses on providing completed novel downloads and online reading.
+  vi: Shubaow tập trung cung cấp tải xuống và đọc trực tuyến các tiểu thuyết đã hoàn thành.
+
+imageUrl: https://placehold.co/600x400?text=Shubaow
+homeUrl: https://www.shubaow.net/
+difficulty: Native
+categories:
+  - sites
+  - novels

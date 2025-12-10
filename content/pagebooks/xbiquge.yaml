@@ -1,0 +1,23 @@
+id: xbiquge
+
+title:
+  zh: 新笔趣阁
+  en: XBiquge
+  vi: XBiquge
+
+subtitle:
+  zh: 最新小说
+  en: Latest Novels
+  vi: Tiểu thuyết mới nhất
+
+description:
+  zh: 新笔趣阁收录了大量网络小说，支持手机阅读。
+  en: XBiquge archives a large number of web novels and supports mobile reading.
+  vi: XBiquge lưu trữ một lượng lớn tiểu thuyết mạng và hỗ trợ đọc trên di động.
+
+imageUrl: https://placehold.co/600x400?text=XBiquge
+homeUrl: https://www.xbiquge.so/
+difficulty: Native
+categories:
+  - sites
+  - novels

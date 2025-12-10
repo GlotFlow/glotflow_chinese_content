@@ -1,0 +1,23 @@
+id: piaotian
+
+title:
+  zh: 飘天文学
+  en: Piaotian
+  vi: Piaotian
+
+subtitle:
+  zh: 热门连载
+  en: Hot Serials
+  vi: Truyện dài kỳ hot
+
+description:
+  zh: 飘天文学提供热门网络小说的即时更新。
+  en: Piaotian provides instant updates for popular web novels.
+  vi: Piaotian cung cấp cập nhật tức thì cho các tiểu thuyết mạng phổ biến.
+
+imageUrl: https://placehold.co/600x400?text=Piaotian
+homeUrl: https://www.piaotian.com/
+difficulty: Native
+categories:
+  - sites
+  - novels

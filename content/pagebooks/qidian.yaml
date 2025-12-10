@@ -1,0 +1,24 @@
+id: qidian
+
+title:
+  zh: 起点中文网
+  en: Qidian
+  vi: Qidian
+
+subtitle:
+  zh: 原创网络文学
+  en: Original Web Literature
+  vi: Văn học mạng gốc
+
+description:
+  zh: 起点中文网是最大的中文网络小说网站，拥有海量原创作品。
+  en: Qidian is the largest Chinese web novel site, featuring a massive collection of original works.
+  vi: Qidian là trang web tiểu thuyết mạng tiếng Trung lớn nhất, với kho tàng tác phẩm gốc khổng lồ.
+
+imageUrl: https://placehold.co/600x400?text=Qidian
+homeUrl: https://www.qidian.com/
+difficulty: Native
+categories:
+  - sites
+  - novels
+  - original

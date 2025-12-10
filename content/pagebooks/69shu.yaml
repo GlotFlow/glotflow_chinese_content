@@ -1,0 +1,23 @@
+id: 69shu
+
+title:
+  zh: 69书吧
+  en: 69shu
+  vi: 69shu
+
+subtitle:
+  zh: 免费网络小说
+  en: Free Web Novels
+  vi: Tiểu thuyết mạng miễn phí
+
+description:
+  zh: 69书吧提供简洁的阅读界面和丰富的小说资源。
+  en: 69shu offers a clean reading interface and rich novel resources.
+  vi: 69shu cung cấp giao diện đọc đơn giản và nguồn tiểu thuyết phong phú.
+
+imageUrl: https://placehold.co/600x400?text=69Shu
+homeUrl: https://www.69shuba.com/
+difficulty: Native
+categories:
+  - sites
+  - novels

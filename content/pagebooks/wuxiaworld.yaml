@@ -1,0 +1,24 @@
+id: wuxiaworld
+
+title:
+  zh: Wuxiaworld
+  en: Wuxiaworld
+  vi: Wuxiaworld
+
+subtitle:
+  zh: 仙侠玄幻翻译
+  en: Wuxia & Xianxia
+  vi: Wuxia & Xianxia
+
+description:
+  zh: Wuxiaworld 是世界上最大的中国网络小说翻译网站。
+  en: Wuxiaworld is the largest Chinese web novel translation site in the world.
+  vi: Wuxiaworld là trang web dịch tiểu thuyết mạng tiếng Trung lớn nhất thế giới.
+
+imageUrl: https://www.wuxiaworld.com/images/logo.jpg
+homeUrl: https://www.wuxiaworld.com/
+difficulty: Mix
+categories:
+  - sites
+  - novels
+  - translation

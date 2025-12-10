@@ -1,0 +1,23 @@
+id: biquge
+
+title:
+  zh: 笔趣阁
+  en: Biquge
+  vi: Biquge
+
+subtitle:
+  zh: 经典小说站
+  en: Classic Novel Site
+  vi: Trang tiểu thuyết kinh điển
+
+description:
+  zh: 笔趣阁是知名的中文小说阅读网站，更新速度快。
+  en: Biquge is a well-known Chinese novel reading site with fast updates.
+  vi: Biquge là trang web đọc tiểu thuyết tiếng Trung nổi tiếng với tốc độ cập nhật nhanh.
+
+imageUrl: https://placehold.co/600x400?text=Biquge
+homeUrl: https://www.biquge.com/
+difficulty: Native
+categories:
+  - sites
+  - novels

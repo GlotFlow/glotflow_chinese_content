@@ -1,0 +1,23 @@
+id: uukanshu
+
+title:
+  zh: UU看书网
+  en: UUKanshu
+  vi: UUKanshu
+
+subtitle:
+  zh: 畅销小说
+  en: Bestselling Novels
+  vi: Tiểu thuyết bán chạy
+
+description:
+  zh: UU看书网致力于提供最新最全的高质量网络小说。
+  en: UUKanshu is dedicated to providing the latest and most complete high-quality web novels.
+  vi: UUKanshu tận tâm cung cấp các tiểu thuyết mạng chất lượng cao mới nhất và đầy đủ nhất.
+
+imageUrl: https://placehold.co/600x400?text=UUKanshu
+homeUrl: https://www.uukanshu.com/
+difficulty: Native
+categories:
+  - sites
+  - novels
