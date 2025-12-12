@@ -265,6 +265,7 @@ async function build() {
   // Create feed
   const feed: Feed = {
     version: config.settings.version,
+    schemaVersion: config.settings.schemaVersion,
     lastUpdated: new Date().toISOString(),
     defaultLocale: config.settings.defaultLocale,
     supportedLocales: config.settings.supportedLocales,

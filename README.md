@@ -205,6 +205,16 @@ npm run build
 git add -A && git commit -m "chore: bump feed version to X.X" && git push
 ```
 
+### Schema Version
+
+The `schemaVersion` field tracks feed structure changes (separate from content version):
+
+```yaml
+schemaVersion: "1.0"
+```
+
+**When to increment:** Bump when the feed JSON structure changes (new fields, renamed fields, changed data types). This helps the app detect breaking schema changes and handle migrations.
+
 ### Item Ordering (createdAt)
 
 Add optional `createdAt` field to control feed order:

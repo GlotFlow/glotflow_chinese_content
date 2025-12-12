@@ -122,6 +122,7 @@ export type BookManifest = z.infer<typeof BookManifestSchema>;
 // Feed schema
 export const FeedSchema = z.object({
   version: z.string(),
+  schemaVersion: z.string(), // Schema version for detecting feed structure changes
   lastUpdated: z.string(),
   defaultLocale: z.string(),
   supportedLocales: z.array(z.string()),
@@ -135,6 +136,7 @@ export type Feed = z.infer<typeof FeedSchema>;
 // Config schemas
 export const SettingsSchema = z.object({
   version: z.string(),
+  schemaVersion: z.string(), // Schema version for detecting feed structure changes
   defaultLocale: z.string(),
   supportedLocales: z.array(z.string()),
   basePath: z.string().optional().default(''),
