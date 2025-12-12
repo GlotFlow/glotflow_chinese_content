@@ -1,0 +1,23 @@
+id: nezha-hsk1
+title:
+  zh: 哪吒
+  en: Nezha
+  vi: Na Tra
+subtitle:
+  zh: 适合 HSK 1 级学习者的简单故事
+  en: Simple story for HSK 1 learners
+  vi: Câu chuyện đơn giản cho người học HSK 1
+author:
+  zh: 汉语教学
+  en: GlotFlow Chinese
+  vi: GlotFlow Chinese
+description:
+  zh: 这是一个关于哪吒的简单故事。
+  en: This is a simple story about Nezha.
+  vi: Đây là một câu chuyện đơn giản về Na Tra.
+difficulty: HSK1
+categories:
+  - beginner
+  - stories
+  - mythology
+status: finished
